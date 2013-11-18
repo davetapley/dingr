@@ -1,8 +1,6 @@
 <h1>Tunes</h1>
 
-<p>With available notes:</p>
-
-<%= @notes.sort.to_sentence %>
+<p>We have <%= @notes.sort.to_sentence %> available.</p>
 
 <% @tunes.each do |t| %>
   <hr>
