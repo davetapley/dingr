@@ -11,6 +11,7 @@
     <div>
       <%= link_to 'Players', players_path, class: 'nav' %>
       <%= link_to 'Tunes', tunes_path, class: 'nav' %>
+      <%= mail_to 'dukedave@gmail.com', 'contact', style: 'float: right;' %>
     </div>
 
     <%= yield %>

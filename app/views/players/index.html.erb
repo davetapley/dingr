@@ -1,20 +1,36 @@
 <h1>Players</h1>
 
 <h2>New</h2>
+
+<p>
+First find the note for your bell(s),
+either by ear if <%= link_to "you're  amazing", 'http://en.wikipedia.org/wiki/Absolute_pitch' %>,
+or using an app for <%= link_to 'Android', 'https://play.google.com/store/apps/details?id=com.bork.dsp.datuna&hl=en' %> or 
+<i>can someone recommend an iOS tuner app?</i>
+</p>
+
+<p>
+Add your note(s) in a space separated list, in <%= link_to 'scientific pitch notation', 'http://en.wikipedia.org/wiki/Scientific_pitch_notation' %> 
+(which is probaby what your tuner will show you).
+</p>
+
 <%= form_for :player do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name, placeholder: 'Your name' %>
+  <%= f.text_field :name %>
   <%= f.label :notes, 'Note(s)' %>
-  <%= f.text_field :notes, placeholder: 'A#4 B7 C8' %>
+  <%= f.text_field :notes, placeholder: "e.g. 'A#4 B7 C8'" %>
   <%= f.submit %>
 <% end %>
 
 <h2>Existing </h2>
+
+<p>Click to edit!</p>
+
 <table class="players">
-<% @players.each do |p| %>
-  <tr>
-    <td><%= best_in_place p, :name, type: :input %></td>
-    <td><%= best_in_place p, :notes, type: :input, display_with: lambda { |n| n.join ' ' } %></td>
-  </tr>
-<% end %>
+  <% @players.each do |p| %>
+    <tr>
+      <td><%= best_in_place p, :name, type: :input %></td>
+      <td><%= best_in_place p, :notes, type: :input, display_with: lambda { |n| n.join ' ' } %></td>
+    </tr>
+  <% end %>
 </table>
