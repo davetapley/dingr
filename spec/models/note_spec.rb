@@ -99,4 +99,19 @@ describe Note do
 
   end
 
+  describe 'normalize_to_semitones' do
+
+    let(:sample_tune) { Tune.parse 'D#8 A#7 C8 D8 C8' }
+    let(:normalized) { Note.normalize_to_semitones sample_tune.notes }
+
+    it 'returns lowest note' do
+      expect(normalized.first).to eq Note.parse('A#7')
+    end
+
+    it 'returns normalized semitones' do
+      expect(normalized.last).to eq [0,2,4,5]
+    end
+
+  end
+
 end

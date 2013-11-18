@@ -1,5 +1,7 @@
 class Note
 
+  include Comparable
+
   # Stores note as semitone offset from middle C, see:
   # http://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies
 
@@ -9,8 +11,25 @@ class Note
     Note.new(*input.match(/([a-gA-G])(#?)(\d?)/).captures)
   end
 
+  def self.normalize_to_semitones(notes)
+    sorted_set = SortedSet.new notes.map(&:semitone)
+    key_offset = Note.new sorted_set.first
+    normalized = sorted_set.map { |n| n - key_offset.semitone }
+    [key_offset, normalized]
+  end
+
   def initialize(*args)
     @semitone = args.length == 1 ? args.first : to_semitone(*args)
+  end
+
+  def hash
+    semitone.hash
+  end
+
+  alias eql? ==
+
+  def <=>(o)
+    semitone <=> o.semitone
   end
 
   def letter
@@ -38,6 +57,10 @@ class Note
 
   def octave
     (@semitone / 12) + 4
+  end
+
+  def to_s
+    "#{ letter.to_s.upcase }#{ accidental == :sharp ? '#' : '' }#{ octave }"
   end
 
   private

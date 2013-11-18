@@ -21,7 +21,7 @@ describe Tune do
 
   describe 'parse' do
 
-    let(:sample_tune) { 'A4, B4, C#4' }
+    let(:sample_tune) { 'A4 B4 C#4' }
 
     it 'are converted to semitones and back' do
       tune = Tune.parse sample_tune
@@ -33,6 +33,94 @@ describe Tune do
       expect(tune.notes.last.letter).to eq :c
       expect(tune.notes.last.semitone).to eq 1
     end
+  end
+
+  describe 'match_notes' do
+
+    describe 'sample tune' do
+
+      let(:sample_tune) { Tune.parse 'A4 B4 C#4' }
+
+      context 'not enough match notes for tune' do
+        let(:notes) { [Note.new(0)] }
+        it { expect(sample_tune.match_notes notes).to be_empty }
+      end
+
+      context 'not enough unique match notes for tune' do
+        let(:notes) { [Note.new(4), Note.new(0), Note.new(4)] }
+        it { expect(sample_tune.match_notes notes).to be_empty }
+      end
+
+      context 'exact match' do
+        let(:notes) { sample_tune.notes }
+        let(:matches) { sample_tune.match_notes notes }
+
+        it 'only finds the one match' do
+          expect(matches).to have(1).item
+        end
+
+        it 'has lowest note as tune' do
+          expect(matches.first[:offset]).to eq(Note.parse 'C#4')
+        end
+
+        it 'uses all the match notes' do
+          #expect(matches.first[:notes]).to match_array(notes)
+        end
+      end
+
+      context 'match with extra notes' do
+        let(:notes) { sample_tune.notes + [Note.new(0), Note.new(4)] }
+        let(:matches) { sample_tune.match_notes notes }
+
+        it 'only finds the one match' do
+          expect(matches).to have(1).item
+        end
+
+        it 'has lowest note as tune' do
+          expect(matches.first[:offset]).to eq(Note.parse 'C#4')
+        end
+
+        it 'uses all only the sample tune notes' do
+          expect(matches.first[:notes]).to match_array(sample_tune.notes)
+        end
+      end
+
+      context 'match a semitone up' do
+        let(:tune_semitone_up) { sample_tune.notes.map { |n| Note.new(n.semitone + 1) } }
+        let(:matches) { sample_tune.match_notes tune_semitone_up }
+
+        it 'only finds the one match' do
+          expect(matches).to have(1).item
+        end
+
+        it 'has lowest note a semitone up' do
+          expect(matches.first[:offset]).to eq(Note.parse 'D4')
+        end
+
+        it 'uses all the match notes' do
+          expect(matches.first[:notes]).to match_array(tune_semitone_up)
+        end
+
+        context 'with extra notes' do
+          let(:matches) { sample_tune.match_notes(tune_semitone_up + [Note.new(0), Note.new(4)]) }
+
+          it 'only finds the one match' do
+            expect(matches).to have(1).item
+          end
+
+          it 'has lowest note a semitone up' do
+            expect(matches.first[:offset]).to eq(Note.parse 'D4')
+          end
+
+          it 'uses all the match notes' do
+            expect(matches.first[:notes]).to match_array(tune_semitone_up)
+          end
+        end
+      end
+
+
+    end
+
   end
 
 end
