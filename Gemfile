@@ -1,3 +1,4 @@
+ruby '2.0.0'
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
@@ -8,6 +9,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+
+gem 'rails_12factor'
 
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 
@@ -23,3 +26,4 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
 end
+
