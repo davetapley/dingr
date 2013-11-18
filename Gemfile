@@ -11,6 +11,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rails_12factor'
+gem 'newrelic_rpm'
 
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 
