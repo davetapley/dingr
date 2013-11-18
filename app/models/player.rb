@@ -1,5 +1,11 @@
 class Player < ActiveRecord::Base
 
+  def self.notes
+    pluck('DISTINCT(unnest(semitones))').collect do |s|
+      Note.new s.to_i
+    end
+  end
+
   def self.parse(input)
     Tune.new notes: input.split(' ').map { |n| Note.parse n }
   end

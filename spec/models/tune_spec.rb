@@ -40,20 +40,25 @@ describe Tune do
     describe 'sample tune' do
 
       let(:sample_tune) { Tune.parse 'A4 B4 C#4' }
+      let(:best_match_count) { sample_tune.match_notes(notes)[:best_match_count] }
+      let(:matches) { sample_tune.match_notes(notes)[:matches] }
 
       context 'not enough match notes for tune' do
         let(:notes) { [Note.new(0)] }
-        it { expect(sample_tune.match_notes notes).to be_empty }
+        it { expect(best_match_count).to eq 1 }
+        it { expect(matches).to be_empty }
       end
 
       context 'not enough unique match notes for tune' do
         let(:notes) { [Note.new(4), Note.new(0), Note.new(4)] }
-        it { expect(sample_tune.match_notes notes).to be_empty }
+        it { expect(best_match_count).to eq 1 }
+        it { expect(matches).to be_empty }
       end
 
       context 'exact match' do
         let(:notes) { sample_tune.notes }
-        let(:matches) { sample_tune.match_notes notes }
+
+        it { expect(best_match_count).to eq notes.size }
 
         it 'only finds the one match' do
           expect(matches).to have(1).item
@@ -64,13 +69,14 @@ describe Tune do
         end
 
         it 'uses all the match notes' do
-          #expect(matches.first[:notes]).to match_array(notes)
+          expect(matches.first[:notes]).to match_array(notes)
         end
       end
 
       context 'match with extra notes' do
         let(:notes) { sample_tune.notes + [Note.new(0), Note.new(4)] }
-        let(:matches) { sample_tune.match_notes notes }
+
+        it { expect(best_match_count).to eq sample_tune.notes.size }
 
         it 'only finds the one match' do
           expect(matches).to have(1).item
@@ -87,7 +93,9 @@ describe Tune do
 
       context 'match a semitone up' do
         let(:tune_semitone_up) { sample_tune.notes.map { |n| Note.new(n.semitone + 1) } }
-        let(:matches) { sample_tune.match_notes tune_semitone_up }
+        let(:notes) { tune_semitone_up }
+
+        it { expect(best_match_count).to eq sample_tune.notes.size }
 
         it 'only finds the one match' do
           expect(matches).to have(1).item
@@ -102,7 +110,9 @@ describe Tune do
         end
 
         context 'with extra notes' do
-          let(:matches) { sample_tune.match_notes(tune_semitone_up + [Note.new(0), Note.new(4)]) }
+          let(:notes) { tune_semitone_up + [Note.new(0), Note.new(4)] }
+
+          it { expect(best_match_count).to eq sample_tune.notes.size }
 
           it 'only finds the one match' do
             expect(matches).to have(1).item

@@ -1,0 +1,20 @@
+<h1>Tunes</h1>
+
+<p>With available notes:</p>
+
+<%= @notes.sort.to_sentence %>
+
+<% @tunes.each do |t| %>
+  <hr>
+  <h2><%= t.name %></h2>
+  <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
+  <% t_match_notes = t.match_notes @notes %>
+  <% if t_match_notes[:matches].present? %>
+    <% t_match_notes[:matches].each do |m| %>
+      <b>Got it!</b> Use notes: <%= m[:notes].to_sentence %>
+  <% end %>
+<% else %>
+  <b>Missing notes</b>, best match is <%= ((t_match_notes[:best_match_count] / t.notes.uniq.size.to_f) * 100).round %>% there!
+<% end %>
+<% end %>
+
