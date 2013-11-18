@@ -1,0 +1,20 @@
+<h1>Players</h1>
+
+<h2>New</h2>
+<%= form_for :player do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: 'Your name' %>
+  <%= f.label :notes, 'Note(s)' %>
+  <%= f.text_field :notes, placeholder: 'A#4 B7 C8' %>
+  <%= f.submit %>
+<% end %>
+
+<h2>Existing </h2>
+<table class="players">
+<% @players.each do |p| %>
+  <tr>
+    <td><%= best_in_place p, :name, type: :input %></td>
+    <td><%= best_in_place p, :notes, type: :input, display_with: lambda { |n| n.join ' ' } %></td>
+  </tr>
+<% end %>
+</table>
