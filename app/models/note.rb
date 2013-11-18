@@ -8,7 +8,7 @@ class Note
   attr_reader :semitone
 
   def self.parse(input)
-    Note.new(*input.match(/([a-gA-G])(#?)(\d?)/).captures)
+    Note.new(*input.match(/([a-gA-G])([#b]?)(\d?)/).captures)
   end
 
   def self.normalize_to_semitones(notes)
@@ -84,6 +84,7 @@ class Note
                end
 
     semitone += 1 if [:sharp, '#'].include? accidental
+    semitone -= 1 if [:flat, 'b'].include? accidental
 
     octave = octave.present? ? octave.to_i : 4
     semitone += (octave - 4) * 12

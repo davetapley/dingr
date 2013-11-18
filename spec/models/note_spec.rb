@@ -70,6 +70,11 @@ describe Note do
         expect(note.semitone).to eq 39
       end
 
+      it 'Eb3' do
+        note = Note.new :e, :flat, 3
+        expect(note.semitone).to eq(-9)
+      end
+
     end
 
     describe 'from string' do
@@ -81,11 +86,18 @@ describe Note do
         expect(note.octave).to eq 4
       end
 
-      it 'parses accidental' do
+      it 'parses sharp accidental' do
         note = Note.parse 'D#7'
         expect(note.letter).to eq :d
         expect(note.accidental).to eq :sharp
         expect(note.octave).to eq 7
+      end
+
+      it 'parses flat accidental' do
+        note = Note.parse 'Eb3'
+        expect(note.letter).to eq :d
+        expect(note.accidental).to eq :sharp
+        expect(note.octave).to eq 3
       end
 
       it 'assumes fourth octave' do

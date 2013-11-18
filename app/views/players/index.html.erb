@@ -5,8 +5,10 @@
 <p>
 First find the note for your bell(s),
 either by ear if <%= link_to "you're  amazing", 'http://en.wikipedia.org/wiki/Absolute_pitch' %>,
-or using an app for <%= link_to 'Android', 'https://play.google.com/store/apps/details?id=com.bork.dsp.datuna&hl=en' %> or 
-<i>can someone recommend an iOS tuner app?</i>
+or using an app for
+<%= link_to 'Android', 'https://play.google.com/store/apps/details?id=com.bork.dsp.datuna&hl=en' %>
+ or 
+<%= link_to 'iOS', 'https://itunes.apple.com/us/app/tuner-lite-by-plusadd-guitar/id635828559?mt=8' %>.
 </p>
 
 <p>
@@ -18,7 +20,7 @@ Add your note(s) in a space separated list, in <%= link_to 'scientific pitch not
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :notes, 'Note(s)' %>
-  <%= f.text_field :notes, placeholder: "e.g. 'A#4 B7 C8'" %>
+  <%= f.text_field :notes, placeholder: "e.g. 'A#4 B7 Eb3'" %>
   <%= f.submit %>
 <% end %>
 
