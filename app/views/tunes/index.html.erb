@@ -2,6 +2,12 @@
 
 <p>We have <%= @notes.sort.to_sentence %> available.</p>
 
+<p>
+Below is a list of all the tunes available, and whether we've matched them.
+<br>
+If a tune can be played in a different key to the given one, it'll be shifted accordingly.
+</p>
+
 <% @tunes.each do |t| %>
   <hr>
   <h2><%= t.name %></h2>
