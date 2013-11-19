@@ -8,19 +8,23 @@ Below is a list of all the tunes available, and whether we've matched them.
 If a tune can be played in a different key to the given one, it'll be shifted accordingly.
 </p>
 
-<% @tunes.each do |t| %>
+<% @tunes.each do |t, t_match_notes| %>
   <hr>
-  <h2><%= t.name %></h2>
-  <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
-  <% t_match_notes = t.match_notes @notes %>
   <% if t_match_notes[:matches].present? %>
+
+    <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
+    <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
     <p><b>Got it!</b> You can use:</p>
     <ul>
       <% t_match_notes[:matches].each do |m| %>
-        <li><%= m[:notes].to_sentence %></li>
+        <li><%= m.values.to_sentence %></li>
       <% end %>
     </ul>
+
   <% else %>
+    <h2><%= t.name %></h2>
+    <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
     <b>Missing notes</b>, best match is <%= ((t_match_notes[:best_match_count] / t.notes.uniq.size.to_f) * 100).round %>% there!
   <% end %>
+
 <% end %>

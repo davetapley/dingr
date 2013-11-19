@@ -1,0 +1,16 @@
+<h1><%= @tune.name %></h1>
+
+<h2>Original</h2>
+
+<%= @tune.notes.join ' ' %>
+
+<% @matches.each_with_index do |m, i| %>
+  <hr>
+  <h2>Version <%= i + 1 %></h2>
+  <h3>Transposition</h3>
+  <%= m.map { |n0, n1| "#{ n0 } becomes #{ n1 }" }.to_sentence %>
+
+  <h3>New notes</h3>
+  <%= @tune.notes.map { |n| m[n] }.join ' ' %>
+
+<% end %>

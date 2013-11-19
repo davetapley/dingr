@@ -64,12 +64,9 @@ describe Tune do
           expect(matches).to have(1).item
         end
 
-        it 'has lowest note as tune' do
-          expect(matches.first[:offset]).to eq(Note.parse 'C#4')
-        end
-
         it 'uses all the match notes' do
-          expect(matches.first[:notes]).to match_array(notes)
+          expect(matches.first.keys).to match_array(notes)
+          expect(matches.first.values).to match_array(notes)
         end
       end
 
@@ -82,12 +79,9 @@ describe Tune do
           expect(matches).to have(1).item
         end
 
-        it 'has lowest note as tune' do
-          expect(matches.first[:offset]).to eq(Note.parse 'C#4')
-        end
-
         it 'uses all only the sample tune notes' do
-          expect(matches.first[:notes]).to match_array(sample_tune.notes)
+          expect(matches.first.keys).to match_array(sample_tune.notes)
+          expect(matches.first.values).to match_array(sample_tune.notes)
         end
       end
 
@@ -101,12 +95,8 @@ describe Tune do
           expect(matches).to have(1).item
         end
 
-        it 'has lowest note a semitone up' do
-          expect(matches.first[:offset]).to eq(Note.parse 'D4')
-        end
-
         it 'uses all the match notes' do
-          expect(matches.first[:notes]).to match_array(tune_semitone_up)
+          expect(matches.first.values).to match_array(tune_semitone_up)
         end
 
         context 'with extra notes' do
@@ -118,12 +108,8 @@ describe Tune do
             expect(matches).to have(1).item
           end
 
-          it 'has lowest note a semitone up' do
-            expect(matches.first[:offset]).to eq(Note.parse 'D4')
-          end
-
           it 'uses all the match notes' do
-            expect(matches.first[:notes]).to match_array(tune_semitone_up)
+            expect(matches.first.values).to match_array(tune_semitone_up)
           end
         end
       end
