@@ -14,13 +14,7 @@ If a tune can be played in a different key to the given one, it'll be shifted ac
 
     <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
     <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
-    <p><b>Got it!</b> You can use:</p>
-    <ul>
-      <% t_match_notes[:matches].each do |m| %>
-        <li><%= m.values.to_sentence %></li>
-      <% end %>
-    </ul>
-
+    <p><b>Got <%=  pluralize t_match_notes[:matches].size, 'version' %>!</b></p>
   <% else %>
     <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
     <p>Requires: <%= t.notes.uniq.sort.to_sentence %></p>
