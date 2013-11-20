@@ -7,6 +7,10 @@ development:
   <<: *DEFAULT
   database: dingr_development
 
+production:
+  <<: *DEFAULT
+  database: dingr_development
+
 test:
   <<: *DEFAULT
   database: dingr_test
