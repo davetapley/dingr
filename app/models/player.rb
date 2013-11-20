@@ -6,6 +6,10 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def self.with_note(note)
+    where "'#{ note.semitone }' = ANY (semitones)"
+  end
+
   def self.parse(input)
     Tune.new notes: input.split(' ').map { |n| Note.parse n }
   end
