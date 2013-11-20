@@ -1,0 +1,10 @@
+<table class="tune">
+  <% notes.in_groups_of(16).each do |row| %>
+    <tr>
+      <% row.each do |note| %>
+        <td><%= note %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
