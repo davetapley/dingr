@@ -10,11 +10,5 @@
   <h2>Version <%= i + 1 %> in <%= notes.first %> <small><%= link_to 'more', tune_version_path(@tune.id, i + 1) %></small></h2>
 
   Players:
-  <% notes_uniq = notes.uniq %>
-  <ol class="note-count-<%= notes_uniq.size %>">
-    <% notes_uniq.each_with_index do |n, i| %>
-      <% players = Player.with_note(n).map(&:name).to_sentence %>
-      <li><span class="note-<%= i %>"><%= n %></span> by <%= players %></li>
-  <% end %>
-</ol>
+  <%= render 'tune_players', notes: notes %>
 <% end %>

@@ -1,3 +1,7 @@
 <h2><%= @tune.name %> in <%= @notes.first %></h2>
 
 <%= render './tunes/tune_notes', notes: @notes %>
+
+<h3>Players</h3>
+
+<%= render './tunes/tune_players', notes: @notes %>
