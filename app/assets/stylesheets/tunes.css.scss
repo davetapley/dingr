@@ -17,13 +17,31 @@ table.tune {
       top: solid 1px lightgrey;
       bottom: solid 1px lightgrey;
     }
+
   }
 
   td:first-child {
-      border-left: solid 4px black;
+    border-left: solid 4px black;
   }
 
   td:nth-child(4n) {
-      border-right: solid 1px black;
+    border-right: solid 1px black;
+  }
+
+}
+
+$base_note_color: lightcoral;
+
+@function calc-hue($nom, $den) {
+  @return adjust-hue($base_note_color, ($nom / $den) * 360)
+}
+
+@for $note_count from 1 through 20 {
+  table.tune.note-count-#{$note_count} {
+    @for $note_number from 0 through $note_count - 1 {
+      td.note-#{$note_number} {
+        background-color: calc-hue($note_number, $note_count);
+      }
+    }
   }
 }

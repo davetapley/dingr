@@ -1,8 +1,9 @@
-<table class="tune">
+<% notes_uniq = notes.uniq %>
+<table class="tune note-count-<%= notes_uniq.size %>">
   <% notes.in_groups_of(16).each do |row| %>
     <tr>
       <% row.each do |note| %>
-        <td><%= note %></td>
+        <td class="note-<%=  notes_uniq.index note %>"><%= note %></td>
       <% end %>
     </tr>
   <% end %>
