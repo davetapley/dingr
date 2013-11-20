@@ -5,3 +5,24 @@
 h2 small {
   font-size: 12px;
 }
+
+table.tune {
+  border-collapse: collapse;
+
+  td {
+    padding: 5px;
+
+    border: {
+      top: solid 1px lightgrey;
+      bottom: solid 1px lightgrey;
+    }
+  }
+
+  td:first-child {
+      border-left: solid 4px black;
+  }
+
+  td:nth-child(4n) {
+      border-right: solid 1px black;
+  }
+}

@@ -2,7 +2,15 @@
 
 <h2>Original <%= link_to nil, 'play', class: 'play-tune', data: { notes: @tune.notes.map(&:to_midi) } %></h2>
 
-<%= @tune.notes.join ' ' %>
+<table class="tune">
+  <% @tune.notes.in_groups_of(16).each do |row| %>
+    <tr>
+      <% row.each do |note| %>
+        <td><%= note %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
 
 <% @matches.each_with_index do |m, i| %>
   <hr>
