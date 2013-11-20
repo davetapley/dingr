@@ -14,8 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require best_in_place
+//= require_tree ../../../vendor/assets/playing-with-midi/js/.
+//= require_tree ../../../vendor/assets/playing-with-midi/inc/.
 //= require_tree .
-
 
 $(document).ready(function() {
   /* Activating Best In Place */

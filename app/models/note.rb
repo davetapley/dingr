@@ -63,6 +63,11 @@ class Note
     "#{ letter.to_s.upcase }#{ accidental == :sharp ? '#' : '' }#{ octave }"
   end
 
+  def to_midi
+    a0 = 0x15
+    a0 + (semitone + 39)
+  end
+
   private
 
   def to_semitone(letter, accidental, octave)
