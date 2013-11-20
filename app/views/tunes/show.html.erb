@@ -6,12 +6,7 @@
 
 <% @matches.each_with_index do |m, i| %>
   <hr>
-  <h2>Version <%= i + 1 %></h2>
-  <h3>Transposition</h3>
-  <%= m.map { |n0, n1| "#{ n0 } becomes #{ n1 }" }.to_sentence %>
-
-  <h3>New notes</h3>
-
-  <%= render 'tune_notes', notes: @tune.notes.map { |n| m[n] } %>
+  <% notes =  @tune.notes.map { |n| m[n] } %>
+  <h2>Version <%= i + 1 %> in <%= notes.first %> <small><%= link_to 'more', tune_version_path(@tune.id, i + 1) %></small></h2>
 
 <% end %>
