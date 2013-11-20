@@ -33,9 +33,9 @@ table.tune {
 $base_note_color: lightcoral;
 
 @for $note_count from 1 through 20 {
-  table.tune.note-count-#{$note_count} {
+  .note-count-#{$note_count} {
     @for $note_number from 0 through $note_count - 1 {
-      td.note-#{$note_number} {
+      .note-#{$note_number} {
         background-color: adjust-hue($base_note_color, ($note_number / $note_count) * 360)
       }
     }
