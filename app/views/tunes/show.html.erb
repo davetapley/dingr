@@ -9,6 +9,6 @@
   <% notes =  @tune.notes.map { |n| m[n] } %>
   <h2>Version <%= i + 1 %> in <%= notes.first %> <small><%= link_to 'more', tune_version_path(@tune.id, i + 1) %></small></h2>
 
-  Players:
+  <%= notes.uniq.map { |n| Player.with_note(n).size }.sum %> Players:
   <%= render 'tune_players', notes: notes %>
 <% end %>
