@@ -20,7 +20,7 @@ class PlayersController < ApplicationController
   private
 
   def player_attributes
-    params.require(:player).permit(:name, :notes_string)
+    params.require(:player).permit(:name, :notes, :notes_string)
   end
 
 end
