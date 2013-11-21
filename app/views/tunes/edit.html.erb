@@ -1,6 +1,6 @@
 <%= form_for @tune do |f| %>
   <h1><%= f.text_field :name %></h1>
-  <%= render 'tune_notes', notes: @tune.notes, form: f %>
+  <%= render 'tune_notes_lyrics', note_lyrics: @tune.notes.zip(@tune.lyrics), form: f %>
   <br>
   <%= f.submit %>
   <%= link_to 'Delete', @tune, confirm: 'Sure?', method: :delete %>

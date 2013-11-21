@@ -2,7 +2,7 @@
 
 <h2>Original <%= link_to nil, 'play', class: 'play-tune', data: { notes: @tune.notes.map(&:to_midi) } %></h2>
 
-<%= render 'tune_notes', notes: @tune.notes %>
+<%= render 'tune_notes_lyrics', note_lyrics: @tune.notes.zip(@tune.lyrics) %>
 
 <% @matches.each_with_index do |m, i| %>
   <hr>

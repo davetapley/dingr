@@ -42,7 +42,7 @@ class TunesController < ApplicationController
   end
 
   def tune_attributes
-    params.require(:tune).permit(:name, :notes, notes: [])
+    params.require(:tune).permit(:name, :notes, notes: [], lyrics: [])
   end
 
 end
