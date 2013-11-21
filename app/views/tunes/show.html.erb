@@ -1,4 +1,4 @@
-<h1><%= @tune.name %></h1>
+<h1><%= @tune.name %> <small><%= link_to 'edit', edit_tune_path(@tune) %></small></h1>
 
 <h2>Original <%= link_to nil, 'play', class: 'play-tune', data: { notes: @tune.notes.map(&:to_midi) } %></h2>
 

@@ -1,0 +1,15 @@
+<h1>New tune</h1>
+
+<%= form_for @tune do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name  %>
+
+  <br>
+
+  <%= f.label :notes %>
+  <%= f.text_area :notes, value: '' %>
+
+  <br>
+
+  <%= f.submit %>
+<% end %>

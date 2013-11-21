@@ -21,17 +21,52 @@ describe Tune do
 
   describe 'parse' do
 
-    let(:sample_tune) { 'A4 B4 C#4' }
+    describe 'space separate tune' do
+      let(:sample_tune) { 'A4 B4 C#4' }
 
-    it 'are converted to semitones and back' do
-      tune = Tune.parse sample_tune
-      expect(tune.notes.length).to eq 3
+      it 'are converted to semitones and back' do
+        tune = Tune.parse sample_tune
+        expect(tune.notes.length).to eq 3
 
-      expect(tune.notes.first.letter).to eq :a
-      expect(tune.notes.first.semitone).to eq 9
+        expect(tune.notes.first.letter).to eq :a
+        expect(tune.notes.first.semitone).to eq 9
 
-      expect(tune.notes.last.letter).to eq :c
-      expect(tune.notes.last.semitone).to eq 1
+        expect(tune.notes.last.letter).to eq :c
+        expect(tune.notes.last.semitone).to eq 1
+      end
+    end
+
+    describe 'comma separate tune' do
+      let(:sample_tune) { 'A4, B4,C#4' }
+
+      it 'are converted to semitones and back' do
+        tune = Tune.parse sample_tune
+        expect(tune.notes.length).to eq 3
+
+        expect(tune.notes.first.letter).to eq :a
+        expect(tune.notes.first.semitone).to eq 9
+
+        expect(tune.notes.last.letter).to eq :c
+        expect(tune.notes.last.semitone).to eq 1
+      end
+    end
+
+    describe 'space separate tune with newlines' do
+      let(:sample_tune) { <<-TUNE }
+      A4 B4
+      C#4
+      TUNE
+
+      it 'are converted to semitones and back' do
+        tune = Tune.parse sample_tune
+        expect(tune.notes.length).to eq 3
+
+        expect(tune.notes.first.letter).to eq :a
+        expect(tune.notes.first.semitone).to eq 9
+
+        expect(tune.notes.last.letter).to eq :c
+        expect(tune.notes.last.semitone).to eq 1
+      end
     end
   end
 

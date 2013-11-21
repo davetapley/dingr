@@ -2,8 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h2 small {
-  font-size: 12px;
+h1, h2 {
+  small {
+    font-size: 12px;
+  }
 }
 
 table.tune {
@@ -17,6 +19,11 @@ table.tune {
     border: {
       top: solid 1px lightgrey;
       bottom: solid 1px lightgrey;
+    }
+
+    input {
+      width: 30px;
+      text-align: center;
     }
 
   }

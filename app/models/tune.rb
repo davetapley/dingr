@@ -1,13 +1,15 @@
 class Tune < ActiveRecord::Base
 
   def self.parse(input)
-    Tune.new notes: input.split(' ').map { |n| Note.parse n }
+    Tune.new notes: Tune.parse_notes(input)
   end
 
   def notes=(notes)
-    self.semitones = notes.collect do |n|
-      n.semitone
+    unless notes.kind_of?(Array) && notes.first && notes.first.kind_of?(Note)
+      notes = Tune.parse_notes notes
     end
+
+    self.semitones = notes.collect(&:semitone)
   end
 
   def notes
@@ -45,5 +47,18 @@ class Tune < ActiveRecord::Base
 
   end
 
+  private
+
+  def self.parse_notes(input)
+    unless input.kind_of? Array
+      input = input.split input.include?(',') ? ',' : ' '
+    end
+
+    input.map do |n|
+      n_strip = n.strip
+      next unless n_strip.present?
+      Note.parse n_strip
+    end.compact
+  end
 
 end

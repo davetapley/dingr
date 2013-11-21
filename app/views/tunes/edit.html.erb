@@ -1,0 +1,7 @@
+<%= form_for @tune do |f| %>
+  <h1><%= f.text_field :name %></h1>
+  <%= render 'tune_notes', notes: @tune.notes, form: f %>
+  <br>
+  <%= f.submit %>
+  <%= link_to 'Delete', @tune, confirm: 'Sure?', method: :delete %>
+<% end %>
