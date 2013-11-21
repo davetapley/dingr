@@ -30,4 +30,10 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def notes_string
+    notes.map(&:to_s).join ' '
+  end
+
+  alias notes_string= notes=
+
 end

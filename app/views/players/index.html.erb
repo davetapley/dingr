@@ -32,7 +32,7 @@ Add your note(s) in a space separated list, in <%= link_to 'scientific pitch not
   <% @players.each do |p| %>
     <tr>
       <td><%= best_in_place p, :name, type: :input %></td>
-      <td><%= best_in_place p, :notes, type: :input, display_with: lambda { |n| n.join ' ' } %></td>
+      <td><%= best_in_place p, :notes_string, type: :input  %></td>
     </tr>
   <% end %>
 </table>
