@@ -1,6 +1,6 @@
 <h2><%= @tune.name %> in <%= @notes.first %></h2>
 
-<%= render './tunes/tune_notes', notes: @notes %>
+<%= render './tunes/tune_notes_lyrics', note_lyrics: @tune.notes.zip(@tune.lyrics) %>
 
 <h3>Players</h3>
 
