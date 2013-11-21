@@ -1,7 +1,36 @@
 <h2><%= @tune.name %> in <%= @notes.first %></h2>
 
-<%= render './tunes/tune_notes_lyrics', note_lyrics: @tune.notes.zip(@tune.lyrics) %>
+<% notes_lyrics = @notes.zip(@tune.lyrics) %>
+<%= render './tunes/tune_notes_lyrics', note_lyrics: notes_lyrics %>
 
 <h3>Players</h3>
 
 <%= render './tunes/tune_players', notes: @notes %>
+
+<% if @tune.lyrics.any?(&:present?) %>
+
+  <h3>Parts</h3>
+
+  <% notes_lyrics_chunks = notes_lyrics.chunk { |note, lyric| note }.map { |n, cs| [n, cs.map(&:last)] } %>
+  <% notes_uniq = @notes.uniq %>
+  <div class="note-count-<%= notes_uniq.size %>">
+
+    <% notes_uniq.each_with_index do |note, i| %>
+      <div class="note-<%= i %>">
+
+        <% players = Player.with_note(note).map(&:name).to_sentence %>
+        <h4 ><%= players %></h4>
+
+        <% chunks = notes_lyrics_chunks.find_all { |n, cs| n == note }.map(&:last) %>
+        <ol>
+          <% chunks.each do |chunk| %>
+            <li><%= chunk.join ' ' %></li>
+          <% end %>
+        </ol>
+
+      </div>
+    <% end %>
+
+  </div>
+
+<% end %>
