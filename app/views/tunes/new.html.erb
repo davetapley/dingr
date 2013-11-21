@@ -2,12 +2,18 @@
 
 <%= form_for @tune do |f| %>
   <%= f.label :name %>
+  <br>
   <%= f.text_field :name  %>
 
-  <br>
+  <div style="padding: 20px 0;">
+    You can paste in notes below.
+    <br>
+    It'll try to be smart about parsing them, either spaces or commas are allow to separate notes.
+    <br>
+    No <%= link_to 'rests', 'http://en.wikipedia.org/wiki/Rest_(music)' %> or <%= link_to 'note values', 'http://en.wikipedia.org/wiki/Note_value' %> yet, working on it.
+  </div>
 
-  <%= f.label :notes %>
-  <%= f.text_area :notes, value: '' %>
+  <%= f.text_area :notes, value: '', style: 'width: 500px; height: 300px;' %>
 
   <br>
 
