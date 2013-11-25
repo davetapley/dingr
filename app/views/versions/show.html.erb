@@ -1,21 +1,21 @@
-<h2><%= @tune.name %> in <%= @notes.first %></h2>
+<h2><%= @tune.name %> in <%= @version.transpose.key %></h2>
 
-<% notes_lyrics = @notes.zip(@tune.lyrics) %>
-<%= render './tunes/tune_notes_lyrics', note_lyrics: notes_lyrics %>
+<% notes_lyrics = @version.transpose.crotchets.zip(@tune.lyrics) %>
+<%= render './tunes/tune_crotchets_lyrics', tune: @version.transpose %>
 
 <h3>Players</h3>
 
-<%= render './tunes/tune_players', notes: @notes %>
+<%= render './tunes/tune_players', uniq_notes: @version.transpose.uniq_notes %>
 
 <% if @tune.lyrics.any?(&:present?) %>
 
   <h3>Parts</h3>
 
   <% notes_lyrics_chunks = notes_lyrics.chunk { |note, lyric| note }.map { |n, cs| [n, cs.map(&:last)] } %>
-  <% notes_uniq = @notes.uniq %>
-  <div class="note-count-<%= notes_uniq.size %>">
+  <% uniq_notes = @version.transpose.uniq_notes %>
+  <div class="note-count-<%= uniq_notes.size %>">
 
-    <% notes_uniq.each_with_index do |note, i| %>
+    <% uniq_notes.each_with_index do |note, i| %>
       <div class="note-<%= i %>">
 
         <% players = Player.with_note(note).map(&:name).to_sentence %>

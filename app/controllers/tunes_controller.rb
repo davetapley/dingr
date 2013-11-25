@@ -8,9 +8,7 @@ class TunesController < ApplicationController
   end
 
   def show
-    match_notes = @tune.match_notes Player.notes
-
-    @matches = match_notes[:matches]
+    @match_versions = @tune.match_notes(Player.notes).versions
   end
 
   def new
@@ -42,7 +40,7 @@ class TunesController < ApplicationController
   end
 
   def tune_attributes
-    params.require(:tune).permit(:name, :notes, notes: [], lyrics: [])
+    params.require(:tune).permit(:name, :crotchets, crotchets: [], lyrics: [])
   end
 
 end

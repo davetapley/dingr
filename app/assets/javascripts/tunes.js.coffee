@@ -14,5 +14,6 @@ $ ->
 
     console.log (notes)
     $.each notes, (i, n) ->
-      MIDI.noteOn 0, n, 127, i
+      if n != 'r'
+        MIDI.noteOn 0, n, 127, i
 

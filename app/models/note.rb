@@ -1,4 +1,4 @@
-class Note
+class Note < Crotchet
 
   include Comparable
 
@@ -28,9 +28,9 @@ class Note
 
   alias eql? ==
 
-  def <=>(o)
-    semitone <=> o.semitone
-  end
+    def <=>(o)
+      semitone <=> o.semitone
+    end
 
   def letter
     case @semitone % 12
@@ -59,8 +59,12 @@ class Note
     (@semitone / 12) + 4
   end
 
-  def to_s
-    "#{ letter.to_s.upcase }#{ accidental == :sharp ? '#' : '' }#{ octave }"
+  def to_s(format = :human)
+    if format == :db
+      semitone.to_s
+    else
+      "#{ letter.to_s.upcase }#{ accidental == :sharp ? '#' : '' }#{ octave }"
+    end
   end
 
   def to_midi

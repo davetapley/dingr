@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121012316) do
+ActiveRecord::Schema.define(version: 20131124225110) do
 
   create_table "notes", force: true do |t|
     t.integer  "semitone"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20131121012316) do
 
   create_table "tunes", force: true do |t|
     t.string   "name"
-    t.string   "semitones",  default: [], array: true
+    t.string   "crotchets",  default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "lyrics",     default: [], array: true

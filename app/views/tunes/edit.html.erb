@@ -9,7 +9,7 @@
     We don't yet support adding or removing notes from this, you'll just have delete this and create a new tune with the correct number of notes (working on this!).
   </div>
 
-  <%= render 'tune_notes_lyrics', note_lyrics: @tune.notes.zip(@tune.lyrics), form: f %>
+  <%= render 'tune_crotchets_lyrics', tune: @tune, form: f %>
   <br>
   <%= f.submit %>
   <%= link_to 'Delete', @tune, confirm: 'Sure?', method: :delete %>

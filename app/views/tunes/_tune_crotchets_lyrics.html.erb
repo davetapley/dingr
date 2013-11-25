@@ -1,24 +1,23 @@
 <% f = defined?(form) ? form : false %>
-<% notes_uniq = note_lyrics.map(&:first).uniq %>
-<% has_lyrics = note_lyrics.map(&:second).any?(&:present?) %>
+<% uniq_notes = @tune.uniq_notes %>
 
-<table class="tune note-count-<%= notes_uniq.size %>">
-  <% note_lyrics.in_groups_of(16).each do |row| %>
+<table class="tune note-count-<%= uniq_notes.size %>">
+  <% @tune.crotchets_lyrics.in_groups_of(16).each do |row| %>
     <tr>
       <% row.each do |note, lyric| %>
-        <td class="note-<%=  notes_uniq.index note %>">
+        <td class="note-<%=  uniq_notes.index note %>">
           <% if f %>
-            <input type="text" name="tune[notes][]" value="<%= note %>" />
+            <input type="text" name="tune[crotchets][]" value="<%= note %>" />
           <% else %>
             <%= note %>
           <% end %>
         </td>
       <% end %>
     </tr>
-    <% if has_lyrics || f %>
+    <% if @tune.lyrics.present? || f %>
       <tr>
         <% row.each do |note, lyric| %>
-          <td class="note-<%=  notes_uniq.index note %>">
+          <td class="note-<%=  uniq_notes.index note %>">
             <% if f %>
               <input type="text" name="tune[lyrics][]" value="<%= lyric %>" />
             <% else %>

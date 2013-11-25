@@ -1,26 +1,40 @@
 class Tune < ActiveRecord::Base
 
   def self.parse(input)
-    Tune.new notes: Tune.parse_notes(input)
+    Tune.new crotchets: Tune.parse_crotchets(input)
   end
 
-  def notes=(notes)
-    unless notes.kind_of?(Array) && notes.first && notes.first.kind_of?(Note)
-      notes = Tune.parse_notes notes
+  def crotchets=(crotchets)
+    unless crotchets.kind_of?(Array) && crotchets.first && crotchets.first.kind_of?(Crotchet)
+      crotchets = Tune.parse_crotchets crotchets
     end
 
-    self.semitones = notes.collect(&:semitone)
+    write_attribute :crotchets, crotchets.collect { |c| c.to_s(:db) }
   end
 
-  def notes
-    semitones.collect do |s|
-      Note.new s.to_i
+  def crotchets
+    read_attribute(:crotchets).collect do |c|
+      ['r', '𝄽'].include?(c) ? Rest.new : Note.new(c.to_i)
     end
+  end
+
+  def uniq_notes
+    crotchets.find_all { |c| c.kind_of? Note }.uniq
+  end
+
+  def crotchets_lyrics
+    crotchets.zip lyrics
+  end
+
+  class MatchResult < Struct.new(:best_match_count, :versions)
+  end
+
+  class MatchVersion < Struct.new(:mapping, :transpose)
   end
 
   def match_notes(match_notes)
     match_notes_uniq_sort = match_notes.uniq.sort
-    lowest_tune_note, normalized_tune_semitones = Note.normalize_to_semitones notes
+    lowest_tune_note, normalized_tune_semitones = Note.normalize_to_semitones uniq_notes
 
     best_match_count = 0
 
@@ -34,30 +48,42 @@ class Tune < ActiveRecord::Base
 
       next nil unless intersection.size == normalized_tune_semitones.size
 
-      match = intersection.map do |s|
+      mapping = intersection.map do |s|
         tune_note = Note.new lowest_tune_note.semitone + s
         match_note = Note.new lowest_match_note.semitone + s
         [tune_note, match_note]
       end
 
-      Hash[match]
+      mapping = Hash[mapping]
+
+      MatchVersion.new mapping, transpose(mapping)
     end
 
-    { best_match_count: best_match_count, matches: matches.compact }
+    MatchResult.new best_match_count, matches.compact
+  end
 
+  def transpose(mapping)
+    transpose = dup
+    transpose.crotchets = crotchets.map do |c|
+      c.kind_of?(Rest) ? c : mapping[c]
+    end
+    transpose
+  end
+
+  def key
+    crotchets.find { |c| c.is_a? Note }
   end
 
   private
 
-  def self.parse_notes(input)
+  def self.parse_crotchets(input)
     unless input.kind_of? Array
       input = input.split input.include?(',') ? ',' : ' '
     end
 
-    input.map do |n|
-      n_strip = n.strip
-      next unless n_strip.present?
-      Note.parse n_strip
+    input.map do |c|
+      next unless c.present?
+      ['r', '𝄽'].include?(c) ? Rest.new : Note.parse(c)
     end.compact
   end
 
