@@ -89,6 +89,7 @@ GEM
     multi_json (1.8.2)
     newrelic_rpm (3.6.9.171)
     pg (0.15.1)
+    pg_array_parser (0.0.9)
     polyglot (0.3.3)
     pry (0.9.12.3)
       coderay (~> 1.0)
@@ -182,6 +183,7 @@ DEPENDENCIES
   jquery-rails
   newrelic_rpm
   pg
+  pg_array_parser
   pry
   rails (= 4.0.0)
   rails_12factor

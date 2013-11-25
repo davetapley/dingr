@@ -13,6 +13,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'rails_12factor'
 gem 'newrelic_rpm'
 
+gem 'pg_array_parser'
+
 gem 'best_in_place', git: 'https://github.com/bernat/best_in_place.git'
 
 group :doc do
