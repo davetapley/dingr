@@ -17,3 +17,7 @@ $ ->
       if n != 'r'
         MIDI.noteOn 0, n, 127, i
 
+  $('input[name="tune[crotchets][]"]').click (e) ->
+    i = $('input[name="tune[crotchets][]"]').index $(this)
+    $('#crotchet_idx').val(i)
+

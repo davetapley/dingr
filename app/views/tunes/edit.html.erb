@@ -10,7 +10,13 @@
   </div>
 
   <%= render 'tune_crotchets_lyrics', tune: @tune, form: f %>
+
   <br>
   <%= f.submit %>
   <%= link_to 'Delete', @tune, confirm: 'Sure?', method: :delete %>
+<% end %>
+
+<%= form_tag 'insert_rest', method: 'post' do %>
+  <%= hidden_field_tag 'crotchet_idx', 0 %>
+  <%= submit_tag 'Insert rest' %>
 <% end %>
