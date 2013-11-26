@@ -4,13 +4,13 @@
   <% @tune.crotchets_lyrics.in_groups_of(16).each do |row| %>
     <tr>
       <% row.each do |note, lyric| %>
-        <td class="note-<%=  uniq_notes.index note %>"><%= note %></td>
+        <td class="note note-<%=  uniq_notes.index note %>"><%= note %></td>
       <% end %>
     </tr>
     <% if @tune.lyrics.present? || f %>
       <tr>
         <% row.each do |note, lyric| %>
-          <td class="note-<%=  uniq_notes.index note %>"><span class="lyric"><%= lyric %></span></td>
+          <td class="note note-<%=  uniq_notes.index note %>"><span class="lyric"><%= lyric %></span></td>
         <% end %>
       </tr>
     <% end %>

@@ -12,8 +12,6 @@ $ ->
     e.preventDefault()
     notes = $(this).data('notes')
 
-    console.log (notes)
     $.each notes, (i, n) ->
       if n != 'r'
         MIDI.noteOn 0, n, 127, i
-

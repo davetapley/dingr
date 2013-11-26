@@ -16,7 +16,7 @@
   <div class="note-count-<%= uniq_notes.size %>">
 
     <% uniq_notes.each_with_index do |note, i| %>
-      <div class="note-<%= i %>">
+      <div class="part note-<%= i %>">
 
         <% players = Player.with_note(note).map(&:name).to_sentence %>
         <h4 ><%= players %></h4>
