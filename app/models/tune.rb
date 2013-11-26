@@ -18,6 +18,14 @@ class Tune < ActiveRecord::Base
     end
   end
 
+  def lyrics=(lyrics)
+    unless lyrics.kind_of?(Array)
+      lyrics = Tune.parse_lyrics lyrics
+    end
+
+    write_attribute :lyrics, lyrics
+  end
+
   def uniq_notes
     crotchets.find_all { |c| c.kind_of? Note }.uniq
   end
@@ -85,6 +93,14 @@ class Tune < ActiveRecord::Base
       next unless c.present?
       ['r', '𝄽'].include?(c) ? Rest.new : Note.parse(c)
     end.compact
+  end
+
+  def self.parse_lyrics(input)
+    unless input.kind_of? Array
+      input = input.split ','
+    end
+
+    input.map { |l| l.strip }
   end
 
 end

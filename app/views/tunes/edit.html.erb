@@ -1,15 +1,17 @@
 <%= form_for @tune do |f| %>
   <h1><%= f.text_field :name %></h1>
 
+  <%= render 'tune_crotchets_lyrics', tune: @tune %>
+
   <div style="padding: 20px 0;">
     You can changes notes and add/change lyrics here.
     <br>
-    Notes on the first row, then lyrics, alternating.
+    Notes/rests in the first box (space delimited), then lyrics in the second(comma delimited).
     <br>
-    We don't yet support adding or removing notes from this, you'll just have delete this and create a new tune with the correct number of notes (working on this!).
+    Don't worry about getting the time signature (i.e notes/rests per line), just update and it'll be reformatted for you.
   </div>
 
-  <%= render 'tune_crotchets_lyrics', tune: @tune, form: f %>
+  <%= render 'edit_text_area', form: f %>
 
   <br>
   <%= f.submit %>

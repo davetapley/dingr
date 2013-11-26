@@ -21,6 +21,8 @@ class TunesController < ApplicationController
   end
 
   def edit
+    @crotchets_text = @tune.crotchets.in_groups_of(16).map { |row| row.map { |c| c.to_s.center 4 }.join(' ') }.join("\n")
+    @lyrics_text = @tune.lyrics.in_groups_of(16).map { |row| row.map { |c| c.to_s.center 4 }.join(', ') }.join("\n")
   end
 
   def update
@@ -40,7 +42,7 @@ class TunesController < ApplicationController
   end
 
   def tune_attributes
-    params.require(:tune).permit(:name, :crotchets, crotchets: [], lyrics: [])
+    params.require(:tune).permit(:name, :crotchets, :lyrics)
   end
 
 end
