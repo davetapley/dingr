@@ -28,16 +28,6 @@ class TunesController < ApplicationController
     redirect_to edit_tune_path(@tune)
   end
 
-  def insert_rest
-    @tune.crotchets = @tune.crotchets.insert params[:crotchet_idx].to_i, Rest.new
-
-    @tune.lyrics = @tune.lyrics.insert params[:crotchet_idx].to_i, ''
-    @tune.lyrics_will_change!
-
-    @tune.save
-    redirect_to edit_tune_path(@tune)
-  end
-
   def destroy
     @tune.destroy
     redirect_to tunes_path
