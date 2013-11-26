@@ -1,5 +1,7 @@
 $ ->
   $('.part').click (e) ->
+    $('.players').hide()
+
     regex = /.*note-(\d+).*/
     match = regex.exec(this.className)
     note = match[1]

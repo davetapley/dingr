@@ -3,9 +3,10 @@
 <% notes_lyrics = @version.transpose.crotchets.zip(@tune.lyrics) %>
 <%= render './tunes/tune_crotchets_lyrics', tune: @version.transpose %>
 
-<h3>Players</h3>
-
-<%= render './tunes/tune_players', uniq_notes: @version.transpose.uniq_notes %>
+<div class="players">
+  <h3>Players</h3>
+  <%= render './tunes/tune_players', uniq_notes: @version.transpose.uniq_notes %>
+</div>
 
 <% if @tune.lyrics.any?(&:present?) %>
 
