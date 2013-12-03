@@ -10,14 +10,10 @@ If a tune can be played in a different key to the given one, it'll be shifted ac
 
 <% @tunes.each do |t, t_match_notes| %>
   <hr>
+  <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
   <% if t_match_notes.versions.present? %>
-
-    <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
-    <p>Requires: <%= t.uniq_notes.sort.to_sentence %></p>
     <p><b>Got <%=  pluralize t_match_notes.versions.size, 'version' %>!</b></p>
   <% else %>
-    <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
-    <p>Requires: <%= t.uniq_notes.sort.to_sentence %></p>
     <b>Missing notes</b>, best match is <%= ((t_match_notes[:best_match_count] / t.uniq_notes.size.to_f) * 100).round %>% there!
   <% end %>
 
