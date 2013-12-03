@@ -1,7 +1,7 @@
 <h2><%= @tune.name %> in <%= @version.transpose.key %></h2>
 
 <% notes_lyrics = @version.transpose.crotchets.zip(@tune.lyrics) %>
-<%= render './tunes/tune_crotchets_lyrics', tune: @version.transpose %>
+<%= render './tunes/tune_table', tune: @version.transpose %>
 
 <div class="players">
   <h3>Players</h3>

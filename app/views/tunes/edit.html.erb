@@ -1,7 +1,7 @@
 <%= form_for @tune do |f| %>
   <h1><%= f.text_field :name %></h1>
 
-  <%= render 'tune_crotchets_lyrics', tune: @tune %>
+  <%= render 'tune_table', tune: @tune %>
 
   <div style="padding: 20px 0;">
     You can add/change/remove notes/rests and lyrics here.
