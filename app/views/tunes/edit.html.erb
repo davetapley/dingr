@@ -1,5 +1,5 @@
 <%= form_for @tune do |f| %>
-  <h1><%= f.text_field :name %></h1>
+  <h1><%= f.text_field :name, placeholder: 'Name' %></h1>
 
   <%= render 'tune_table', tune: @tune %>
 
