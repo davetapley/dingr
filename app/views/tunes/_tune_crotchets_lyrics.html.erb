@@ -1,13 +1,13 @@
-<% uniq_notes = @tune.uniq_notes %>
+<% uniq_notes = tune.uniq_notes %>
 
 <table class="tune note-count-<%= uniq_notes.size %>">
-  <% @tune.crotchets_lyrics.in_groups_of(16).each do |row| %>
+  <% tune.crotchets_lyrics.in_groups_of(16).each do |row| %>
     <tr>
       <% row.each do |note, lyric| %>
         <td class="note note-<%=  uniq_notes.index note %>"><%= note %></td>
       <% end %>
     </tr>
-    <% if @tune.lyrics.present? %>
+    <% if tune.lyrics.present? %>
       <tr>
         <% row.each do |note, lyric| %>
           <td class="note note-<%=  uniq_notes.index note %>"><span class="lyric"><%= lyric %></span></td>
