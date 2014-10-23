@@ -1,0 +1,3 @@
+[submodule "vendor/assets/playing-with-midi"]
+	path = vendor/assets/playing-with-midi
+	url = https://github.com/mudcube/MIDI.js.git
