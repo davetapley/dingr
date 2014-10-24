@@ -4,7 +4,7 @@ describe Note do
 
   describe 'Scientific pitch notation' do
 
-    describe 'from semitone' do
+    describe 'from crotchet' do
 
       it 'middle C (C4)' do
         note = Note.new 0
@@ -111,16 +111,16 @@ describe Note do
 
   end
 
-  describe 'normalize_to_semitones' do
+  describe 'normalize_to_crotchets' do
 
     let(:sample_tune) { Tune.parse 'D#8 A#7 C8 D8 C8' }
-    let(:normalized) { Note.normalize_to_semitones sample_tune.notes }
+    let(:normalized) { Note.normalize_to_semitones sample_tune.crotchets }
 
     it 'returns lowest note' do
       expect(normalized.first).to eq Note.parse('A#7')
     end
 
-    it 'returns normalized semitones' do
+    it 'returns normalized crotchets' do
       expect(normalized.last).to eq [0,2,4,5]
     end
 

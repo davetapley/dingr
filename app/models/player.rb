@@ -11,7 +11,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.parse(input)
-    Tune.new notes: input.split(' ').map { |n| Note.parse n }
+    Tune.new crotchets: input.split(' ').map { |n| Note.parse n }
   end
 
   def notes=(notes)

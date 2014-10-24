@@ -2,19 +2,19 @@ require 'spec_helper'
 
 describe Tune do
 
-  describe 'notes' do
+  describe 'crotchets' do
 
     let(:sample_tune) { ['A4', 'B4', 'C#4'].collect { |n| Note.parse n } }
 
     it 'are converted to semitones and back' do
-      tune = Tune.create notes: sample_tune
-      expect(tune.notes.length).to eq 3
+      tune = Tune.create crotchets: sample_tune
+      expect(tune.crotchets.length).to eq 3
 
-      expect(tune.notes.first.letter).to eq :a
-      expect(tune.notes.first.semitone).to eq 9
+      expect(tune.crotchets.first.letter).to eq :a
+      expect(tune.crotchets.first.semitone).to eq 9
 
-      expect(tune.notes.last.letter).to eq :c
-      expect(tune.notes.last.semitone).to eq 1
+      expect(tune.crotchets.last.letter).to eq :c
+      expect(tune.crotchets.last.semitone).to eq 1
     end
 
   end
@@ -26,13 +26,13 @@ describe Tune do
 
       it 'are converted to semitones and back' do
         tune = Tune.parse sample_tune
-        expect(tune.notes.length).to eq 3
+        expect(tune.crotchets.length).to eq 3
 
-        expect(tune.notes.first.letter).to eq :a
-        expect(tune.notes.first.semitone).to eq 9
+        expect(tune.crotchets.first.letter).to eq :a
+        expect(tune.crotchets.first.semitone).to eq 9
 
-        expect(tune.notes.last.letter).to eq :c
-        expect(tune.notes.last.semitone).to eq 1
+        expect(tune.crotchets.last.letter).to eq :c
+        expect(tune.crotchets.last.semitone).to eq 1
       end
     end
 
@@ -41,13 +41,13 @@ describe Tune do
 
       it 'are converted to semitones and back' do
         tune = Tune.parse sample_tune
-        expect(tune.notes.length).to eq 3
+        expect(tune.crotchets.length).to eq 3
 
-        expect(tune.notes.first.letter).to eq :a
-        expect(tune.notes.first.semitone).to eq 9
+        expect(tune.crotchets.first.letter).to eq :a
+        expect(tune.crotchets.first.semitone).to eq 9
 
-        expect(tune.notes.last.letter).to eq :c
-        expect(tune.notes.last.semitone).to eq 1
+        expect(tune.crotchets.last.letter).to eq :c
+        expect(tune.crotchets.last.semitone).to eq 1
       end
     end
 
@@ -59,13 +59,13 @@ describe Tune do
 
       it 'are converted to semitones and back' do
         tune = Tune.parse sample_tune
-        expect(tune.notes.length).to eq 3
+        expect(tune.crotchets.length).to eq 3
 
-        expect(tune.notes.first.letter).to eq :a
-        expect(tune.notes.first.semitone).to eq 9
+        expect(tune.crotchets.first.letter).to eq :a
+        expect(tune.crotchets.first.semitone).to eq 9
 
-        expect(tune.notes.last.letter).to eq :c
-        expect(tune.notes.last.semitone).to eq 1
+        expect(tune.crotchets.last.letter).to eq :c
+        expect(tune.crotchets.last.semitone).to eq 1
       end
     end
   end
@@ -75,76 +75,76 @@ describe Tune do
     describe 'sample tune' do
 
       let(:sample_tune) { Tune.parse 'A4 B4 C#4' }
-      let(:best_match_count) { sample_tune.match_notes(notes)[:best_match_count] }
-      let(:matches) { sample_tune.match_notes(notes)[:matches] }
+      let(:best_match_count) { sample_tune.match_notes(crotchets)[:best_match_count] }
+      let(:versions) { sample_tune.match_notes(crotchets).versions }
 
-      context 'not enough match notes for tune' do
-        let(:notes) { [Note.new(0)] }
+      context 'not enough match crotchets for tune' do
+        let(:crotchets) { [Note.new(0)] }
         it { expect(best_match_count).to eq 1 }
-        it { expect(matches).to be_empty }
+        it { expect(versions).to be_empty }
       end
 
-      context 'not enough unique match notes for tune' do
-        let(:notes) { [Note.new(4), Note.new(0), Note.new(4)] }
+      context 'not enough unique match crotchets for tune' do
+        let(:crotchets) { [Note.new(4), Note.new(0), Note.new(4)] }
         it { expect(best_match_count).to eq 1 }
-        it { expect(matches).to be_empty }
+        it { expect(versions).to be_empty }
       end
 
       context 'exact match' do
-        let(:notes) { sample_tune.notes }
+        let(:crotchets) { sample_tune.crotchets }
 
-        it { expect(best_match_count).to eq notes.size }
+        it { expect(best_match_count).to eq crotchets.size }
 
         it 'only finds the one match' do
-          expect(matches).to have(1).item
+          expect(versions).to have(1).item
         end
 
-        it 'uses all the match notes' do
-          expect(matches.first.keys).to match_array(notes)
-          expect(matches.first.values).to match_array(notes)
+        it 'uses all the match crotchets' do
+          expect(versions.first.mapping.keys).to match_array(crotchets)
+          expect(versions.first.mapping.values).to match_array(crotchets)
         end
       end
 
-      context 'match with extra notes' do
-        let(:notes) { sample_tune.notes + [Note.new(0), Note.new(4)] }
+      context 'match with extra crotchets' do
+        let(:crotchets) { sample_tune.crotchets + [Note.new(0), Note.new(4)] }
 
-        it { expect(best_match_count).to eq sample_tune.notes.size }
+        it { expect(best_match_count).to eq sample_tune.crotchets.size }
 
         it 'only finds the one match' do
-          expect(matches).to have(1).item
+          expect(versions).to have(1).item
         end
 
-        it 'uses all only the sample tune notes' do
-          expect(matches.first.keys).to match_array(sample_tune.notes)
-          expect(matches.first.values).to match_array(sample_tune.notes)
+        it 'uses all only the sample tune crotchets' do
+          expect(versions.first.mapping.keys).to match_array(sample_tune.crotchets)
+          expect(versions.first.mapping.values).to match_array(sample_tune.crotchets)
         end
       end
 
       context 'match a semitone up' do
-        let(:tune_semitone_up) { sample_tune.notes.map { |n| Note.new(n.semitone + 1) } }
-        let(:notes) { tune_semitone_up }
+        let(:tune_semitone_up) { sample_tune.crotchets.map { |n| Note.new(n.semitone + 1) } }
+        let(:crotchets) { tune_semitone_up }
 
-        it { expect(best_match_count).to eq sample_tune.notes.size }
+        it { expect(best_match_count).to eq sample_tune.crotchets.size }
 
         it 'only finds the one match' do
-          expect(matches).to have(1).item
+          expect(versions).to have(1).item
         end
 
-        it 'uses all the match notes' do
-          expect(matches.first.values).to match_array(tune_semitone_up)
+        it 'uses all the match crotchets' do
+          expect(versions.first.mapping.values).to match_array(tune_semitone_up)
         end
 
-        context 'with extra notes' do
-          let(:notes) { tune_semitone_up + [Note.new(0), Note.new(4)] }
+        context 'with extra crotchets' do
+          let(:crotchets) { tune_semitone_up + [Note.new(0), Note.new(4)] }
 
-          it { expect(best_match_count).to eq sample_tune.notes.size }
+          it { expect(best_match_count).to eq sample_tune.crotchets.size }
 
           it 'only finds the one match' do
-            expect(matches).to have(1).item
+            expect(versions).to have(1).item
           end
 
-          it 'uses all the match notes' do
-            expect(matches.first.values).to match_array(tune_semitone_up)
+          it 'uses all the match crotchets' do
+            expect(versions.first.mapping.values).to match_array(tune_semitone_up)
           end
         end
       end
