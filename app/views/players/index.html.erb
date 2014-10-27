@@ -7,7 +7,7 @@ First find the note for your bell(s),
 either by ear if <%= link_to "you're  amazing", 'http://en.wikipedia.org/wiki/Absolute_pitch' %>,
 or using an app for
 <%= link_to 'Android', 'https://play.google.com/store/apps/details?id=com.bork.dsp.datuna&hl=en' %>
- or 
+or 
 <%= link_to 'iOS', 'https://itunes.apple.com/us/app/tuner-lite-by-plusadd-guitar/id635828559?mt=8' %>.
 </p>
 
@@ -18,10 +18,11 @@ Add your note(s) in a space separated list, in <%= link_to 'scientific pitch not
 
 <%= form_for :player do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.label :notes, 'Note(s)' %>
-  <%= f.text_field :notes, placeholder: "e.g. 'A#4 B7 Eb3'" %>
-  <%= f.submit %>
+<%= f.text_field :name %>
+<%= f.label :notes, 'Note(s)' %>
+<%= f.text_field :notes, placeholder: "e.g. 'A#4 B7 Eb3'" %>
+<%= f.text_field :hue %>
+<%= f.submit %>
 <% end %>
 
 <h2>Existing </h2>
@@ -29,10 +30,16 @@ Add your note(s) in a space separated list, in <%= link_to 'scientific pitch not
 <p>Click to edit!</p>
 
 <table class="players">
+  <tr>
+    <th>Name</th>
+    <th>Notes</th>
+    <th>Color</th>
+  </tr>
   <% @players.each do |p| %>
     <tr>
-      <td><%= best_in_place p, :name, type: :input %></td>
-      <td><%= best_in_place p, :notes_string, type: :input  %></td>
-    </tr>
-  <% end %>
+    <td><%= best_in_place p, :name, type: :input %></td>
+    <td><%= best_in_place p, :notes_string, type: :input  %></td>
+    <td><%= best_in_place p, :hue, type: :input %></td>
+  </tr>
+<% end %>
 </table>
