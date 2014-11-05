@@ -25,7 +25,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'guard-rspec'
-  gem 'pry'
+  gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
 end

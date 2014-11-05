@@ -41,6 +41,9 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.1.4)
+    byebug (3.2.0)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     coderay (1.1.0)
@@ -51,7 +54,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    columnize (0.8.9)
     debug_inspector (0.0.2)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -177,6 +182,7 @@ DEPENDENCIES
   best_in_place!
   better_errors
   binding_of_caller
+  byebug
   coffee-rails (~> 4.0.0)
   guard-rspec
   jbuilder (~> 1.2)
@@ -184,7 +190,6 @@ DEPENDENCIES
   newrelic_rpm
   pg
   pg_array_parser
-  pry
   rails (= 4.0.0)
   rails_12factor
   rspec-rails (~> 2.0)
