@@ -72,6 +72,11 @@ class Note < Crotchet
     a0 + (semitone + 39)
   end
 
+  def player_notes_index
+    return @player_notes_index unless @player_notes_index.nil?
+    @player_notes_index = Player.notes.find_index { |n| n.semitone == @semitone }
+  end
+
   private
 
   def to_semitone(letter, accidental, octave)
