@@ -14,13 +14,6 @@ class Player < ActiveRecord::Base
     Tune.new crotchets: input.split(' ').map { |n| Note.parse n }
   end
 
-  def self.assign_colors!
-    gap = 360.0 / Player.count
-    Player.all.each_with_index do |p, i|
-      p.update_attribute :hue, i * gap
-    end
-  end
-
   def notes=(notes)
     if notes.kind_of? String
       notes = notes.split(' ').map { |n| Note.parse n }
