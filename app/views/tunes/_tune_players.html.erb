@@ -1,6 +1,7 @@
 <ol id="tune-players" class="note-count-<%= uniq_notes.size %>">
   <% uniq_notes.each_with_index do |n, i| %>
     <% players = Player.with_note(n).map(&:name).to_sentence %>
+    <% next if players.empty? %>
     <li><span class="note-<%= i %>"><%= n %></span> by <%= players %></li>
   <% end %>
 </ol>

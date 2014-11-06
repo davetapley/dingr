@@ -7,7 +7,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.with_note(note)
-    where "'#{ note.semitone }' = ANY (semitones)"
+    note.nil? ? none : where("'#{ note.semitone }' = ANY (semitones)")
   end
 
   def self.parse(input)

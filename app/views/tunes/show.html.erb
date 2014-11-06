@@ -7,3 +7,18 @@
   <%= v.transpose.uniq_notes.map { |n| Player.with_note(n).size }.sum %> Players:
   <%= render 'tune_players', uniq_notes: v.transpose.uniq_notes %>
 <% end %>
+
+<% if @match_versions.empty? %>
+  <h2>Best incomplete version in <%= @best_version.available_mapping.first.first %> <small>is <%= ((@best_version.mapping.size / @tune.uniq_notes.size.to_f) * 100).round %>% there</small></h2>
+
+  <h3>Got</h3>
+  <%= render 'tune_players', uniq_notes: @best_version.transpose.uniq_notes %>
+
+  <h3>Missing</h3>
+  <ol id="tune-missing">
+    <% @best_version.mapping.each do |_tune_note, version_note| %>
+      <% next unless Player.with_note(version_note).empty? %>
+      <li><span><%= version_note %></span></li>
+    <% end %>
+  </ol>
+<% end %>

@@ -14,7 +14,7 @@ If a tune can be played in a different key to the given one, it'll be shifted ac
   <% if t_match_notes.versions.present? %>
     <p><b>Got <%=  pluralize t_match_notes.versions.size, 'version' %>!</b></p>
   <% else %>
-    <b>Missing notes</b>, best match is <%= ((t_match_notes[:best_match_count] / t.uniq_notes.size.to_f) * 100).round %>% there!
+    <b>Missing notes</b>, best match is <%= ((t_match_notes.best_version.available_mapping.size / t.uniq_notes.size.to_f) * 100).round %>% there!
   <% end %>
 
 <% end %>

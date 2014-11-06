@@ -5,11 +5,11 @@ class Tune < ActiveRecord::Base
   end
 
   def crotchets=(crotchets)
-    unless crotchets.kind_of?(Array) && crotchets.first && crotchets.first.kind_of?(Crotchet)
+    unless crotchets.compact.any? { |c| c.kind_of? Crotchet }
       crotchets = Tune.parse_crotchets crotchets
     end
 
-    write_attribute :crotchets, crotchets.collect { |c| c.to_s(:db) }
+    write_attribute :crotchets, crotchets.collect { |c| c.nil? ? nil : c.to_s(:db) }
   end
 
   def crotchets
@@ -34,40 +34,51 @@ class Tune < ActiveRecord::Base
     crotchets.zip lyrics
   end
 
-  class MatchResult < Struct.new(:best_match_count, :versions)
+  class MatchResult < Struct.new(:best_version, :versions)
   end
 
   class MatchVersion < Struct.new(:mapping, :transpose)
+    def available_mapping
+      available_mapping = mapping.dup
+      available_mapping.keep_if do |tune_note, version_note|
+        Player.with_note(version_note).present?
+      end
+      available_mapping
+    end
   end
 
   def match_notes(match_notes)
     match_notes_uniq_sort = match_notes.uniq.sort
     lowest_tune_note, normalized_tune_semitones = Note.normalize_to_semitones uniq_notes
 
-    best_match_count = 0
+    best_version = nil
 
     matches = (0 .. match_notes_uniq_sort.size).collect do |match_note_offset|
       remaining_match_notes = match_notes_uniq_sort.from match_note_offset
 
       lowest_match_note, normalized_remaining_semitones = Note.normalize_to_semitones remaining_match_notes
-
       intersection = normalized_tune_semitones & normalized_remaining_semitones
-      best_match_count = [best_match_count, intersection.size].max
 
-      next nil unless intersection.size == normalized_tune_semitones.size
+      is_full_match = intersection.size == normalized_tune_semitones.size
+      is_best_match = best_version.nil? || intersection.size > best_version.size
 
-      mapping = intersection.map do |s|
-        tune_note = Note.new lowest_tune_note.semitone + s
-        match_note = Note.new lowest_match_note.semitone + s
+      next nil unless is_full_match || is_best_match
+
+      mapping = uniq_notes.sort.map do |tune_note|
+        offset = lowest_match_note.semitone - lowest_tune_note.semitone
+        match_note = Note.new tune_note.semitone + offset
         [tune_note, match_note]
       end
 
       mapping = Hash[mapping]
+      transposition = transpose mapping
+      version = MatchVersion.new mapping, transposition
+      best_version = version if is_best_match
 
-      MatchVersion.new mapping, transpose(mapping)
+      is_full_match ? version : nil
     end
 
-    MatchResult.new best_match_count, matches.compact
+    MatchResult.new best_version, matches.compact
   end
 
   def transpose(mapping)

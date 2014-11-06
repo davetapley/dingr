@@ -8,7 +8,9 @@ class TunesController < ApplicationController
   end
 
   def show
-    @match_versions = @tune.match_notes(Player.notes).versions
+    match_result = @tune.match_notes Player.notes
+    @match_versions = match_result.versions
+    @best_version = match_result.best_version
   end
 
   def new

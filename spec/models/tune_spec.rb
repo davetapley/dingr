@@ -75,25 +75,20 @@ describe Tune do
     describe 'sample tune' do
 
       let(:sample_tune) { Tune.parse 'A4 B4 C#4' }
-      let(:best_match_count) { sample_tune.match_notes(crotchets)[:best_match_count] }
       let(:versions) { sample_tune.match_notes(crotchets).versions }
 
       context 'not enough match crotchets for tune' do
         let(:crotchets) { [Note.new(0)] }
-        it { expect(best_match_count).to eq 1 }
         it { expect(versions).to be_empty }
       end
 
       context 'not enough unique match crotchets for tune' do
         let(:crotchets) { [Note.new(4), Note.new(0), Note.new(4)] }
-        it { expect(best_match_count).to eq 1 }
         it { expect(versions).to be_empty }
       end
 
       context 'exact match' do
         let(:crotchets) { sample_tune.crotchets }
-
-        it { expect(best_match_count).to eq crotchets.size }
 
         it 'only finds the one match' do
           expect(versions).to have(1).item
@@ -107,8 +102,6 @@ describe Tune do
 
       context 'match with extra crotchets' do
         let(:crotchets) { sample_tune.crotchets + [Note.new(0), Note.new(4)] }
-
-        it { expect(best_match_count).to eq sample_tune.crotchets.size }
 
         it 'only finds the one match' do
           expect(versions).to have(1).item
@@ -124,8 +117,6 @@ describe Tune do
         let(:tune_semitone_up) { sample_tune.crotchets.map { |n| Note.new(n.semitone + 1) } }
         let(:crotchets) { tune_semitone_up }
 
-        it { expect(best_match_count).to eq sample_tune.crotchets.size }
-
         it 'only finds the one match' do
           expect(versions).to have(1).item
         end
@@ -136,8 +127,6 @@ describe Tune do
 
         context 'with extra crotchets' do
           let(:crotchets) { tune_semitone_up + [Note.new(0), Note.new(4)] }
-
-          it { expect(best_match_count).to eq sample_tune.crotchets.size }
 
           it 'only finds the one match' do
             expect(versions).to have(1).item
