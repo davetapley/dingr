@@ -5,6 +5,6 @@ Dingr::Application.routes.draw do
     resources :versions, only: [:show]
   end
 
-  root to: 'players#index'
+  root to: 'tunes#index'
 
 end
