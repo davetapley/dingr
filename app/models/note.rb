@@ -74,7 +74,7 @@ class Note < Crotchet
 
   def player_notes_index
     return @player_notes_index unless @player_notes_index.nil?
-    @player_notes_index = Player.notes.find_index { |n| n.semitone == @semitone }
+    @player_notes_index = Player.unscoped.notes.find_index { |n| n.semitone == @semitone }
   end
 
   private

@@ -1,4 +1,4 @@
-<ol id="tune-players" class="note-count-<%= Player.notes.size %>">
+<ol id="tune-players" class="note-count-<%= Player.unscoped.notes.size %>">
   <% uniq_notes.each do |n| %>
     <% players = Player.with_note(n).map(&:name).to_sentence %>
     <% next if players.empty? %>

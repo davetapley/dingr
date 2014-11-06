@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
 
   def index
-    @players = Player.all
+    @players = Player.unscoped.all
   end
 
   def create
@@ -11,7 +11,7 @@ class PlayersController < ApplicationController
   end
 
   def update
-    player = Player.find params[:id]
+    player = Player.unscoped.find params[:id]
     player.update_attributes player_attributes
 
     respond_with_bip player
@@ -20,7 +20,7 @@ class PlayersController < ApplicationController
   private
 
   def player_attributes
-    params.require(:player).permit(:name, :notes, :notes_string)
+    params.require(:player).permit(:name, :notes, :notes_string, :available)
   end
 
 end

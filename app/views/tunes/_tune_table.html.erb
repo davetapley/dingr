@@ -1,6 +1,6 @@
 <% uniq_notes = tune.uniq_notes %>
 
-<table class="tune note-count-<%= Player.notes.size %>">
+<table class="tune note-count-<%= Player.unscoped.notes.size %>">
   <% tune.crotchets_lyrics.in_groups_of(16).each do |row| %>
     <tr>
       <% row.each do |note, lyric| %>

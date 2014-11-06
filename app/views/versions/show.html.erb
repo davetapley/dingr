@@ -14,7 +14,7 @@
 
   <% notes_lyrics_chunks = notes_lyrics.chunk { |note, lyric| note }.map { |n, cs| [n, cs.map(&:last)] } %>
   <% uniq_notes = @version.transpose.uniq_notes %>
-  <div class="note-count-<%= Player.notes.size %>">
+  <div class="note-count-<%= Player.unscoped.notes.count %>">
 
     <% uniq_notes.each do |note| %>
       <div class="part note-<%= note.player_notes_index %>">

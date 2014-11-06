@@ -1,5 +1,7 @@
 class Player < ActiveRecord::Base
 
+  default_scope where(available: true)
+
   def self.notes
     pluck('DISTINCT(unnest(semitones))').collect do |s|
       Note.new s.to_i
