@@ -2,7 +2,7 @@
 
 <% @match_versions.each_with_index do |v, i| %>
   <hr>
-  <h2>in <%= v.transpose.key %> <small><%= link_to 'more', tune_version_path(@tune.id, i + 1) %></small></h2>
+  <h2><%= link_to "in #{ v.transpose.key }", tune_version_path(@tune.id, i + 1) %></h2>
 
   <%= v.transpose.uniq_notes.map { |n| Player.with_note(n).size }.sum %> Players:
   <%= render 'tune_players', uniq_notes: v.transpose.uniq_notes %>
@@ -10,16 +10,13 @@
 
 <% if @match_versions.empty? %>
   <h2>
-    Best incomplete version in <%= @best_version.available_mapping.first.first %>
-    <small>
-      <%= link_to "is #{ ((@best_version.available_mapping.size / @tune.uniq_notes.size.to_f) * 100).round }% there", tune_version_path(@tune.id, 'best') %>
-    </small>
+    <%= link_to "in #{ @best_version.available_mapping.first.first }", tune_version_path(@tune.id, 'best') %>
 </h2>
 
-  <h3>Got</h3>
+  <%= @best_version.transpose.uniq_notes.map { |n| Player.with_note(n).size }.sum %> Players:
   <%= render 'tune_players', uniq_notes: @best_version.transpose.uniq_notes %>
 
-  <h3>Missing</h3>
+  missing notes:
   <ol id="tune-missing">
     <% @best_version.mapping.each do |_tune_note, version_note| %>
       <% next unless Player.with_note(version_note).empty? %>

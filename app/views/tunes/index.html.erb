@@ -1,16 +1,8 @@
 <h1>Tunes</h1>
 
-<p>We have <%= @notes.sort.to_sentence %> available.</p>
-
-<p>
-Below is a list of all the tunes available, and whether we've matched them.
-<br>
-If a tune can be played in a different key to the given one, it'll be shifted accordingly.
-</p>
-
-<% @tunes.each do |t, t_match_notes| %>
+<% @tunes.sort_by { |t, _t_match_notes| t.name }.each do |t, t_match_notes| %>
   <hr>
-  <h2><%= t.name %> <small><%= link_to 'more', t %></small></h2>
+  <h2> <%= link_to t.name, t %></h2>
   <% if t_match_notes.versions.present? %>
     <p><b>Got <%=  pluralize t_match_notes.versions.size, 'version' %>!</b></p>
   <% else %>
