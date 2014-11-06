@@ -39,11 +39,13 @@ class Tune < ActiveRecord::Base
 
   class MatchVersion < Struct.new(:mapping, :transpose)
     def available_mapping
-      available_mapping = mapping.dup
-      available_mapping.keep_if do |tune_note, version_note|
+      return @available_mapping unless @available_mapping.nil?
+
+      @available_mapping = mapping.dup
+      @available_mapping.keep_if do |tune_note, version_note|
         Player.with_note(version_note).present?
       end
-      available_mapping
+      @available_mapping
     end
   end
 
@@ -60,7 +62,7 @@ class Tune < ActiveRecord::Base
       intersection = normalized_tune_semitones & normalized_remaining_semitones
 
       is_full_match = intersection.size == normalized_tune_semitones.size
-      is_best_match = best_version.nil? || intersection.size > best_version.size
+      is_best_match = best_version.nil? || intersection.size > best_version.available_mapping.size
 
       next nil unless is_full_match || is_best_match
 
