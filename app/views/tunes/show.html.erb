@@ -9,7 +9,7 @@
 <% end %>
 
 <% if @match_versions.empty? %>
-  <h2>Best incomplete version in <%= @best_version.available_mapping.first.first %> <small>is <%= ((@best_version.mapping.size / @tune.uniq_notes.size.to_f) * 100).round %>% there</small></h2>
+  <h2>Best incomplete version in <%= @best_version.available_mapping.first.first %> <small>is <%= ((@best_version.available_mapping.size / @tune.uniq_notes.size.to_f) * 100).round %>% there</small></h2>
 
   <h3>Got</h3>
   <%= render 'tune_players', uniq_notes: @best_version.transpose.uniq_notes %>
