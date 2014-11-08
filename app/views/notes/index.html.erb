@@ -6,6 +6,7 @@
   <% @missing_notes_count.each do |note, count| %>
     <tr>
       <td><%= note %></td>
+      <td><i><%= (note.semitone) %></i></td>
       <td><%= count %></td>
     </tr>
 <% end %>
