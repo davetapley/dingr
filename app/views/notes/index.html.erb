@@ -1,0 +1,12 @@
+<h1>Notes</h1>
+
+<h2>Missing from best incomplete version</h2>
+
+<table>
+  <% @missing_notes_count.each do |note, count| %>
+    <tr>
+      <td><%= note %></td>
+      <td><%= count %></td>
+    </tr>
+<% end %>
+</table>

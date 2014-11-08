@@ -47,6 +47,18 @@ class Tune < ActiveRecord::Base
       end
       @available_mapping
     end
+
+    def notes
+      SortedSet.new mapping.values
+    end
+
+    def available_notes
+      SortedSet.new available_mapping.values
+    end
+
+    def missing_notes
+      SortedSet.new(notes) - SortedSet.new(available_notes)
+    end
   end
 
   def match_notes(match_notes)
