@@ -1,3 +1,14 @@
+<h2>Available notes</h2>
+
+<table class="tune note-count-<%= Player.unscoped.notes.size %>">
+  <% @player_notes.sort_by(&:semitone).each do |note| %>
+    <tr>
+      <td class="note note-<%= note.player_notes_index %>"><%= note %></td>
+      <td><i><%= (note.semitone) %></i></td>
+    </tr>
+<% end %>
+</table>
+
 <h2>Missing from best incomplete version</h2>
 
 <table>

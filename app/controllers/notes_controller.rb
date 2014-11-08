@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
   def index
-    player_notes = Player.notes
-    match_results = Tune.all.map { |t| t.match_notes(player_notes) }
+    @player_notes = Player.notes
+    match_results = Tune.all.map { |t| t.match_notes(@player_notes) }
     incomplete_results = match_results.find_all { |r| r.versions.empty? }
 
     missing_notes = incomplete_results.collect do |r|
