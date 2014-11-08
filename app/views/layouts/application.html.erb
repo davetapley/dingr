@@ -8,13 +8,17 @@
   </head>
   <body>
 
-    <div>
-      <%= link_to 'Players', players_path, class: 'nav' %>
-      <%= link_to 'Tunes', tunes_path, class: 'nav' %>
-      <%= mail_to 'dukedave@gmail.com', 'contact', style: 'float: right;' %>
-    </div>
-
+    <%= mail_to 'dukedave@gmail.com', 'contact', style: 'float: right;' %>
+    <h1>Dingr</h1>
     <%= yield %>
+
+    <div>
+      <hr />
+      admin:
+      <%= link_to 'players', players_path, class: 'nav' %>
+      <%= link_to 'tunes', tunes_path, class: 'nav' %>
+      <%= link_to 'notes', notes_path, class: 'nav' %>
+    </div>
 
   </body>
 </html>
