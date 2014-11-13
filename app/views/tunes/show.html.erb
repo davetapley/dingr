@@ -10,7 +10,7 @@
 
 <% if @match_versions.empty? %>
   <h2>
-    <%= link_to "in #{ @best_version.available_mapping.first.first }", tune_version_path(@tune.id, 'best') %>
+    <%= link_to "in #{ @best_version.transpose.key }", tune_version_path(@tune.id, 'best') %>
 </h2>
 
   <%= @best_version.transpose.uniq_notes.map { |n| Player.with_note(n).size }.sum %> Players:
