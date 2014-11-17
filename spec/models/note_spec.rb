@@ -121,7 +121,7 @@ describe Note do
     end
 
     it 'returns normalized crotchets' do
-      expect(normalized.last).to eq [0,2,4,5]
+      expect(normalized.last).to eq [0, 2, 4, 5]
     end
 
   end

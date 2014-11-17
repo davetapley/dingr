@@ -25,8 +25,10 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'guard-rspec'
+  gem 'guard-rubocop'
   gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
+gem 'rubocop', require: false

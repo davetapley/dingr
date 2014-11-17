@@ -1,15 +1,14 @@
 class Tune < ActiveRecord::Base
-
   def self.parse(input)
     Tune.new crotchets: Tune.parse_crotchets(input)
   end
 
   def crotchets=(crotchets)
-    unless crotchets.compact.any? { |c| c.kind_of? Crotchet }
+    unless crotchets.compact.any? { |c| c.is_a? Crotchet }
       crotchets = Tune.parse_crotchets crotchets
     end
-
-    write_attribute :crotchets, crotchets.collect { |c| c.nil? ? nil : c.to_s(:db) }
+    crotchets = crotchets.collect { |c| c.nil? ? nil : c.to_s(:db) }
+    write_attribute :crotchets, crotchets
   end
 
   def crotchets

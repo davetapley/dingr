@@ -114,7 +114,10 @@ describe Tune do
       end
 
       context 'match a semitone up' do
-        let(:tune_semitone_up) { sample_tune.crotchets.map { |n| Note.new(n.semitone + 1) } }
+        let(:tune_semitone_up) do
+          sample_tune.crotchets.map { |n| Note.new(n.semitone + 1) }
+        end
+
         let(:crotchets) { tune_semitone_up }
 
         it 'only finds the one match' do
@@ -133,11 +136,11 @@ describe Tune do
           end
 
           it 'uses all the match crotchets' do
-            expect(versions.first.mapping.values).to match_array(tune_semitone_up)
+            crotchets = versions.first.mapping.values
+            expect(crotchets).to match_array(tune_semitone_up)
           end
         end
       end
-
 
     end
 

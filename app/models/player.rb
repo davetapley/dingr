@@ -1,5 +1,4 @@
 class Player < ActiveRecord::Base
-
   default_scope where(available: true)
 
   def self.notes
@@ -17,13 +16,8 @@ class Player < ActiveRecord::Base
   end
 
   def notes=(notes)
-    if notes.kind_of? String
-      notes = notes.split(' ').map { |n| Note.parse n }
-    end
-
-    self.semitones = notes.collect do |n|
-      n.semitone
-    end
+    notes = notes.split(' ').map { |n| Note.parse n } if notes.is_a? String
+    self.semitones = notes.collect(&:semitone)
   end
 
   def notes
@@ -36,6 +30,5 @@ class Player < ActiveRecord::Base
     notes.map(&:to_s).join ' '
   end
 
-  alias notes_string= notes=
-
+  alias_method :notes_string=, :notes=
 end
