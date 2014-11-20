@@ -8,7 +8,9 @@ class Note < Crotchet
   attr_reader :semitone
 
   def self.parse(input)
-    Note.new(*input.match(/([a-gA-G])([#b]?)(\d?)/).captures)
+    parse_scientific_notation = input.match(/([a-gA-G])([#b]?)(\d?)/)
+    return nil unless parse_scientific_notation
+    Note.new(*parse_scientific_notation.captures)
   end
 
   def self.normalize_to_semitones(notes)

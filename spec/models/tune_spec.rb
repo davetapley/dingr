@@ -146,4 +146,26 @@ describe Tune do
 
   end
 
+  describe 'transpose_to_version' do
+
+    let(:sample_tune) { Tune.parse 'A4, B4, C#4' }
+
+    describe 'to original key' do
+      it 'should be the same' do
+        version = sample_tune.transpose_to_version Note.parse('A4')
+        expect(version.transpose.crotchets).to eql(sample_tune.crotchets)
+      end
+    end
+
+    describe 'to another key' do
+      let(:a_transposition) { Tune.parse 'C5, D5, E4' }
+
+      it 'should have correct notes' do
+        version = sample_tune.transpose_to_version a_transposition.key
+        expect(version.transpose.crotchets).to eql(a_transposition.crotchets)
+      end
+    end
+
+  end
+
 end

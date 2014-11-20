@@ -102,6 +102,13 @@ class Tune < ActiveRecord::Base
     transpose
   end
 
+  def transpose_to_version(note)
+    offset = key.semitone - note.semitone
+    mapping = Hash[uniq_notes.map { |n| [n, Note.new(n.semitone - offset)] } ]
+    transposition = transpose mapping
+    MatchVersion.new mapping, transposition
+  end
+
   def key
     crotchets.find { |c| c.is_a? Note }
   end
